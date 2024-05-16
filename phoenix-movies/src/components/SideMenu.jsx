@@ -10,7 +10,7 @@ function SideMenu() {
         <div className='sideMenu'>
             <a href="#" className="logo">
                 <i class='bi bi-controller'></i>
-                <span className="brand">Play</span>
+                <span className="brand">Phoenix</span>
             </a>
             <ul className="nav">
                 {navData.map(item => (
