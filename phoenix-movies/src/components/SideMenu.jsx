@@ -3,11 +3,11 @@ import './sideMenu.css'
 import navListData from '../data/navListData'
 import NavListItem from './NavListItem'
 
-function SideMenu() {
+function SideMenu({ active }) {
     const [navData, setNavdata] = useState(navListData)
 
     return (
-        <div className='sideMenu'>
+        <div className={`sideMenu ${active ? 'active' : undefined}`}>
             <a href="#" className="logo">
                 <i class='bi bi-controller'></i>
                 <span className="brand">Phoenix</span>
