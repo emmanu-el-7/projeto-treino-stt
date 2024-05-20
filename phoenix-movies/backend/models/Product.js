@@ -1,33 +1,21 @@
-const { Model } = require('objection');
+const knex = require('../config/db');
 
-class Product extends Model {
-	static get tableName() {
-		return 'products';
-	}
-
-	static get jsonSchema() {
-		return {
-			type: 'object',
-			required: ['name', 'description', 'price', 'category'],
-
-			properties: {
-				id: { type: 'integer' },
-				name: { type: 'string', minLength: 4, maxLength: 255 },
-				description: { type: 'string', minLength: 1, maxLength: 255 },
-				price: { type: 'string', minLength: 1, maxLength: 255 },
-				category: { type: 'string', minLength: 1, maxLength: 255 },
-			},
-		};
-	}
-
-	$beforeInsert() {
-		this.created_at = new Date().toISOString();
-		this.updated_at = new Date().toISOString();
-	}
-
-	$beforeUpdate() {
-		this.updated_at = new Date().toISOString();
-	}
-}
+const Product = {
+	getAll: () => {
+		return knex('products').select('*');
+	},
+	getById: (id) => {
+		return knex('products').where({ id }).first();
+	},
+	create: (product) => {
+		return knex('products').insert(product).returning('*');
+	},
+	update: (id, product) => {
+		return knex('products').where({ id }).update(product).returning('*');
+	},
+	delete: (id) => {
+		return knex('products').where({ id }).del();
+	},
+};
 
 module.exports = Product;
