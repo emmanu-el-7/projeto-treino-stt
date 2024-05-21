@@ -1,5 +1,5 @@
 const Hapi = require('@hapi/hapi');
-const paymentRoutes = require('./routes/paymentRoutes');
+const customerRoutes = require('./routes/customerRoutes');
 require('./config/db');
 
 const init = async () => {
@@ -8,7 +8,7 @@ const init = async () => {
 		host: 'localhost',
 	});
 
-	server.route(paymentRoutes);
+	server.route(customerRoutes);
 
 	await server.start();
 	console.log('Server running on %s', server.info.uri);
