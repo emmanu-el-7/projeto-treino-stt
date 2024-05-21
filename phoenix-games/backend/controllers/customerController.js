@@ -1,4 +1,3 @@
-const Customer = require('../models/Customer');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const jwtSecret = process.env.JWT_SECRET;
@@ -7,72 +6,83 @@ const generateToken = (id) => {
 	return jwt.sign({ id }, jwtSecret, { expiresIn: '7d' });
 };
 
-const register = async (req, res) => {
-	const { name, email, password } = req.body;
+const register = async (request, h) => {
+	const { name, email, password } = request.payload;
+	const db = request.server.app.db;
 
-	const existingCustomer = await Customer.query().findOne({ email });
+	const existingCustomer = await db('customers').where({ email }).first();
 
 	if (existingCustomer) {
-		return res
-			.status(422)
-			.json({ errors: ['Por favor, utilize outro e-mail.'] });
+		return h
+			.response({ errors: ['Por favor, utilize outro e-mail.'] })
+			.code(422);
 	}
 
 	const salt = await bcrypt.genSalt();
 	const passwordHash = await bcrypt.hash(password, salt);
 
-	const newCustomer = await Customer.query().insert({
-		name,
-		email,
-		password: passwordHash,
-	});
+	const [newCustomer] = await db('customers')
+		.insert({
+			name,
+			email,
+			password: passwordHash,
+		})
+		.returning('*');
 
 	if (!newCustomer) {
-		return res
-			.status(422)
-			.json({ errors: ['Houve um erro, por favor tente mais tarde!'] });
+		return h
+			.response({ errors: ['Houve um erro, por favor tente mais tarde!'] })
+			.code(422);
 	}
 
-	res.status(201).json({
-		id: newCustomer.id,
-		token: generateToken(newCustomer.id),
-	});
+	return h
+		.response({
+			id: newCustomer.id,
+			token: generateToken(newCustomer.id),
+		})
+		.code(201);
 };
 
-const login = async (req, res) => {
-	const { email, password } = req.body;
+const login = async (request, h) => {
+	const { email, password } = request.payload;
+	const db = request.server.app.db;
 
-	const customer = await Customer.query().findOne({ email });
+	const customer = await db('customers').where({ email }).first();
 
 	if (!customer) {
-		return res.status(404).json({ errors: ['Usuário não encontrado'] });
+		return h.response({ errors: ['Usuário não encontrado'] }).code(404);
 	}
 
-	if (!(await bcrypt.compare(password, customer.password))) {
-		return res.status(422).json({ errors: ['Senha incorreta'] });
+	const isMatch = await bcrypt.compare(password, customer.password);
+
+	if (!isMatch) {
+		return h.response({ errors: ['Senha incorreta'] }).code(422);
 	}
 
-	res.status(200).json({
-		id: customer.id,
-		profileImage: customer.profileImage,
-		token: generateToken(customer.id),
-	});
+	return h
+		.response({
+			id: customer.id,
+			profileImage: customer.profileImage,
+			token: generateToken(customer.id),
+		})
+		.code(200);
 };
 
-const getCurrentCustomer = async (req, res) => {
-	const customer = req.customer;
-	res.status(200).json(customer);
+const getCurrentCustomer = async (request, h) => {
+	const customer = request.auth.credentials;
+	return h.response(customer).code(200);
 };
 
-const update = async (req, res) => {
-	const { name, password } = req.body;
+const update = async (request, h) => {
+	const { name, password } = request.payload;
 	let profileImage = null;
 
-	if (req.file) {
-		profileImage = req.file.filename;
+	if (request.file) {
+		profileImage = request.file.filename;
 	}
 
-	const reqCustomer = req.customer;
+	const db = request.server.app.db;
+	const reqCustomer = request.auth.credentials;
 
 	let updatedFields = { name };
 	if (password) {
@@ -84,43 +94,47 @@ const update = async (req, res) => {
 		updatedFields.profileImage = profileImage;
 	}
 
-	const customer = await Customer.query().patchAndFetchById(
-		reqCustomer.id,
-		updatedFields
-	);
+	const [customer] = await db('customers')
+		.where({ id: reqCustomer.id })
+		.update(updatedFields)
+		.returning('*');
 
 	if (!customer) {
-		return res.status(404).json({ errors: ['Usuário não encontrado'] });
+		return h.response({ errors: ['Usuário não encontrado'] }).code(404);
 	}
 
-	res.status(200).json(customer);
+	return h.response(customer).code(200);
 };
 
-const getCustomerById = async (req, res) => {
-	const { id } = req.params;
+const getCustomerById = async (request, h) => {
+	const { id } = request.params;
+	const db = request.server.app.db;
 
 	try {
-		const customer = await Customer.query()
-			.findById(id)
-			.select('id', 'name', 'email', 'profileImage');
+		const customer = await db('customers')
+			.where({ id })
+			.select('id', 'name', 'email', 'profileImage')
+			.first();
 
 		if (!customer) {
-			return res.status(404).json({ errors: ['Usuário não encontrado'] });
+			return h.response({ errors: ['Usuário não encontrado'] }).code(404);
 		}
 
-		res.status(200).json(customer);
+		return h.response(customer).code(200);
 	} catch (error) {
-		res.status(500).json({ errors: ['Erro ao buscar usuário.'] });
+		return h.response({ errors: ['Erro ao buscar usuário.'] }).code(500);
 	}
 };
 
-const getAllCustomers = async (req, res) => {
+const getAllCustomers = async (request, h) => {
+	const db = request.server.app.db;
+
 	try {
-		const customers = await Customer.query();
-		res.status(200).json(customers);
+		const customers = await db('customers');
+		return h.response(customers).code(200);
 	} catch (error) {
 		console.error('Erro ao buscar clientes:', error);
-		res.status(500).json({ error: 'Erro ao buscar clientes' });
+		return h.response({ error: 'Erro ao buscar clientes' }).code(500);
 	}
 };
 

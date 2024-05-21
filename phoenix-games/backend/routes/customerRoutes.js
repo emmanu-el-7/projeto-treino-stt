@@ -1,34 +1,40 @@
-const customerController = require('../controllers/customerController');
+const customerController = require('./controllers/customersController');
 
 module.exports = [
 	{
-		method: 'GET',
-		path: '/customers',
-		handler: customerController.getAllCustomers,
-	},
-	{
 		method: 'POST',
-		path: '/customers/register',
+		path: '/register',
 		handler: customerController.register,
 	},
 	{
 		method: 'POST',
-		path: '/customers/login',
+		path: '/login',
 		handler: customerController.login,
 	},
 	{
 		method: 'GET',
-		path: '/customers/me',
+		path: '/me',
 		handler: customerController.getCurrentCustomer,
+		options: {
+			auth: 'jwt',
+		},
 	},
 	{
 		method: 'PUT',
-		path: '/customers/update',
+		path: '/update',
 		handler: customerController.update,
+		options: {
+			auth: 'jwt',
+		},
 	},
 	{
 		method: 'GET',
-		path: '/customers/{id}',
+		path: '/customer/{id}',
 		handler: customerController.getCustomerById,
+	},
+	{
+		method: 'GET',
+		path: '/customers',
+		handler: customerController.getAllCustomers,
 	},
 ];

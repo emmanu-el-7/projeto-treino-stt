@@ -1,12 +1,19 @@
 const Hapi = require('@hapi/hapi');
+const knex = require('knex');
+const knexConfig = require('./knexfile');
 const customerRoutes = require('./customerRoutes');
 const paymentRoutes = require('./paymentRoutes');
+
+const environment = process.env.NODE_ENV || 'development';
+const db = knex(knexConfig[environment]);
 
 const init = async () => {
 	const server = Hapi.server({
 		port: 3000,
 		host: 'localhost',
 	});
+
+	server.app.db = db;
 
 	server.route([
 		...customerRoutes,
