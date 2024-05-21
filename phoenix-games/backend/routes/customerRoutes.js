@@ -4,26 +4,31 @@ module.exports = [
 	{
 		method: 'GET',
 		path: '/customers',
-		handler: customerController.listCustomer,
+		handler: customerController.getAllCustomers,
+	},
+	{
+		method: 'POST',
+		path: '/customers/register',
+		handler: customerController.register,
+	},
+	{
+		method: 'POST',
+		path: '/customers/login',
+		handler: customerController.login,
+	},
+	{
+		method: 'GET',
+		path: '/customers/me',
+		handler: customerController.getCurrentCustomer,
+	},
+	{
+		method: 'PUT',
+		path: '/customers/update',
+		handler: customerController.update,
 	},
 	{
 		method: 'GET',
 		path: '/customers/{id}',
-		handler: customerController.showCustomer,
-	},
-	{
-		method: 'POST',
-		path: '/customers',
-		handler: customerController.createCustomer,
-	},
-	{
-		method: 'PUT',
-		path: '/customers/{id}',
-		handler: customerController.updateCustomer,
-	},
-	{
-		method: 'DELETE',
-		path: '/customers/{id}',
-		handler: customerController.deleteCustomer,
+		handler: customerController.getCustomerById,
 	},
 ];

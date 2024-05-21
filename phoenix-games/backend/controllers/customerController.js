@@ -13,8 +13,9 @@ const register = async (req, res) => {
 	const existingCustomer = await Customer.query().findOne({ email });
 
 	if (existingCustomer) {
-		res.status(422).json({ errors: ['Por favor, utilize outro e-mail.'] });
-		return;
+		return res
+			.status(422)
+			.json({ errors: ['Por favor, utilize outro e-mail.'] });
 	}
 
 	const salt = await bcrypt.genSalt();
@@ -27,10 +28,9 @@ const register = async (req, res) => {
 	});
 
 	if (!newCustomer) {
-		res
+		return res
 			.status(422)
 			.json({ errors: ['Houve um erro, por favor tente mais tarde!'] });
-		return;
 	}
 
 	res.status(201).json({
@@ -45,13 +45,11 @@ const login = async (req, res) => {
 	const customer = await Customer.query().findOne({ email });
 
 	if (!customer) {
-		res.status(404).json({ errors: ['Usuário não encontrado'] });
-		return;
+		return res.status(404).json({ errors: ['Usuário não encontrado'] });
 	}
 
 	if (!(await bcrypt.compare(password, customer.password))) {
-		res.status(422).json({ errors: ['Senha incorreta'] });
-		return;
+		return res.status(422).json({ errors: ['Senha incorreta'] });
 	}
 
 	res.status(200).json({
@@ -92,8 +90,7 @@ const update = async (req, res) => {
 	);
 
 	if (!customer) {
-		res.status(404).json({ errors: ['Usuário não encontrado'] });
-		return;
+		return res.status(404).json({ errors: ['Usuário não encontrado'] });
 	}
 
 	res.status(200).json(customer);
@@ -108,13 +105,22 @@ const getCustomerById = async (req, res) => {
 			.select('id', 'name', 'email', 'profileImage');
 
 		if (!customer) {
-			res.status(404).json({ errors: ['Usuário não encontrado'] });
-			return;
+			return res.status(404).json({ errors: ['Usuário não encontrado'] });
 		}
 
 		res.status(200).json(customer);
 	} catch (error) {
 		res.status(500).json({ errors: ['Erro ao buscar usuário.'] });
+	}
+};
+
+const getAllCustomers = async (req, res) => {
+	try {
+		const customers = await Customer.query();
+		res.status(200).json(customers);
+	} catch (error) {
+		console.error('Erro ao buscar clientes:', error);
+		res.status(500).json({ error: 'Erro ao buscar clientes' });
 	}
 };
 
@@ -124,4 +130,5 @@ module.exports = {
 	getCurrentCustomer,
 	update,
 	getCustomerById,
+	getAllCustomers,
 };
