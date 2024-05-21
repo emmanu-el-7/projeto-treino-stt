@@ -10,6 +10,7 @@
 		"nodemon": "^3.1.0",
 		"objection": "^3.1.4",
 		"pg": "^8.11.5",
+		"react-router-dom": "^6.23.1",
 		"uuid": "^9.0.1"
 	}
 }
