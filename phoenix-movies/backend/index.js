@@ -8,7 +8,7 @@ const { v4: uuidv4 } = require('uuid');
 const knexConfig = require('./knexfile');
 
 const server = Hapi.server({
-	port: process.env.PORT || 8000,
+	port: process.env.PORT || 3000,
 	host: 'localhost',
 });
 
