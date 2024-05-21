@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './sideMenu.css';
-import navListData from '../data/navListData';
+import navListData from '../../data/navListData';
 import NavListItem from './NavListItem';
 
 function SideMenu({ active }) {
