@@ -1,32 +1,35 @@
-const { Model } = require('objection');
+const knex = require('../config/db');
 
-class Cart extends Model {
-	static get tableName() {
-		return 'cart';
-	}
-
-	static get jsonSchema() {
-		return {
-			type: 'object',
-			required: ['id_customer', 'products', 'total_value'],
-
-			properties: {
-				id: { type: 'integer' },
-				id_customer: { type: 'integer' },
-				products: { type: 'string', minLength: 1, maxLength: 255 },
-				total_value: { type: 'string', minLength: 1, maxLength: 255 },
-			},
-		};
-	}
-
-	$beforeInsert() {
-		this.created_at = new Date().toISOString();
-		this.updated_at = new Date().toISOString();
-	}
-
-	$beforeUpdate() {
-		this.updated_at = new Date().toISOString();
-	}
-}
+const Cart = {
+	getAll: () => {
+		return knex('cart').select('*');
+	},
+	getById: (id) => {
+		return knex('cart').where({ id }).first();
+	},
+	create: (cart) => {
+		const timestamp = new Date().toISOString();
+		return knex('cart')
+			.insert({
+				...cart,
+				created_at: timestamp,
+				updated_at: timestamp,
+			})
+			.returning('*');
+	},
+	update: (id, cart) => {
+		const timestamp = new Date().toISOString();
+		return knex('cart')
+			.where({ id })
+			.update({
+				...cart,
+				updated_at: timestamp,
+			})
+			.returning('*');
+	},
+	delete: (id) => {
+		return knex('cart').where({ id }).del();
+	},
+};
 
 module.exports = Cart;
