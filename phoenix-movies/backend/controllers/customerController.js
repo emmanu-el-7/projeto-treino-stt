@@ -105,7 +105,7 @@ const getCustomerById = async (req, res) => {
 	try {
 		const customer = await Customer.query()
 			.findById(id)
-			.select('id', 'name', 'email', 'profileImage'); 
+			.select('id', 'name', 'email', 'profileImage');
 
 		if (!customer) {
 			res.status(404).json({ errors: ['Usuário não encontrado'] });
