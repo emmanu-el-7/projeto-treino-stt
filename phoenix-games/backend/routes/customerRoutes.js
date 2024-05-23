@@ -15,17 +15,11 @@ module.exports = [
 		method: 'GET',
 		path: '/me',
 		handler: customerController.getCurrentCustomer,
-		options: {
-			auth: 'jwt',
-		},
 	},
 	{
 		method: 'PUT',
 		path: '/update',
 		handler: customerController.update,
-		options: {
-			auth: 'jwt',
-		},
 	},
 	{
 		method: 'GET',

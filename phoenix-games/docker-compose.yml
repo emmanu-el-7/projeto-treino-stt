@@ -4,9 +4,11 @@ services:
   backend:
     build: ./backend
     ports:
-      - '5000:5000'
+      - '3001:3001'
     environment:
       - NODE_ENV=development
+    volumes:
+      - ./backend:/phoenix-games
     depends_on:
       db:
         condition: service_healthy

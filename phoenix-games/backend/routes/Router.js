@@ -1,30 +1,29 @@
 const Hapi = require('@hapi/hapi');
 const customerRoutes = require('./customerRoutes');
-const paymenRoutes = require('./paymentRoutes');
+const paymentRoutes = require('./paymentRoutes');
 
 const init = async () => {
 	const server = Hapi.server({
-		port: 3000,
-		host: 'localhost',
+		port: 3001,
+		host: '0.0.0.0',
 	});
 
-	server.route({
-		method: 'GET',
-		path: '/api/customers/{param*}',
-		handler: customerRoutes,
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/api/payments/{param*}',
-		handler: paymenRoutes,
-	});
+	server.route(customerRoutes);
+	server.route(paymentRoutes);
 
 	server.route({
 		method: 'GET',
 		path: '/',
 		handler: (request, h) => {
 			return 'API funcionando!';
+		},
+	});
+
+	server.route({
+		method: 'GET',
+		path: '/healtcheck',
+		handler: (request, h) => {
+			return 'qualquer coisa';
 		},
 	});
 

@@ -1,11 +1,10 @@
-require('dotenv').config(); // Carrega as variáveis de ambiente
+require('dotenv').config();
 
 const Hapi = require('@hapi/hapi');
 const Knex = require('knex');
 const knexConfig = require('./knexfile');
 const customerRoutes = require('./routes/customerRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
-const Jwt = require('@hapi/jwt');
 const PORT = process.env.PORT || 3001;
 
 const environment = process.env.NODE_ENV || 'development';
@@ -14,45 +13,27 @@ const db = Knex(knexConfig[environment]);
 const init = async () => {
 	const server = Hapi.server({
 		port: PORT,
-		host: 'localhost',
+		host: '0.0.0.0',
 	});
 
-	await server.register(Jwt);
+	server.route(customerRoutes);
+	server.route(paymentRoutes);
 
-	server.auth.strategy('jwt', 'jwt', {
-		keys: process.env.JWT_SECRET,
-		verify: {
-			aud: false,
-			iss: false,
-			sub: false,
-		},
-		validate: (artifacts, request, h) => {
-			const { id } = artifacts.decoded.payload;
-			return {
-				isValid: !!id,
-				credentials: { id },
-			};
+	server.route({
+		method: 'GET',
+		path: '/',
+		handler: (request, h) => {
+			return 'API funcionando!';
 		},
 	});
 
-	server.auth.default('jwt');
-
-	server.app.db = db;
-
-	server.route([
-		...customerRoutes,
-		...paymentRoutes,
-		{
-			method: 'GET',
-			path: '/',
-			handler: (request, h) => {
-				return 'API funcionando!';
-			},
-			options: {
-				auth: false,
-			},
+	server.route({
+		method: 'GET',
+		path: '/healtcheck',
+		handler: (request, h) => {
+			return 'qualquer coisa';
 		},
-	]);
+	});
 
 	await server.start();
 	console.log('Server running on %s', server.info.uri);
