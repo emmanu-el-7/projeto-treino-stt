@@ -57,6 +57,12 @@ class PaymentController {
 			return h.response(error).code(500);
 		}
 	}
-}  
+}
 
-module.exports = new PaymentController();
+module.exports = {
+	listPayments,
+	showPayment,
+	createPayment,
+	updatePayment,
+	deletePayment,
+};

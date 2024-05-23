@@ -59,4 +59,10 @@ class ProductController {
 	}
 }
 
-module.exports = new ProductController();
+module.exports = {
+	listProducts,
+	showProduct,
+	createProduct,
+	updateProduct,
+	deleteProduct,
+};
