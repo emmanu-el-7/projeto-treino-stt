@@ -27,14 +27,6 @@ const init = async () => {
 		},
 	});
 
-	server.route({
-		method: 'GET',
-		path: '/healtcheck',
-		handler: (request, h) => {
-			return 'qualquer coisa';
-		},
-	});
-
 	await server.start();
 	console.log('Server running on %s', server.info.uri);
 };
