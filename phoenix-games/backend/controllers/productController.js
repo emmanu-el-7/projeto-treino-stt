@@ -1,9 +1,9 @@
-const ProductModel = require('../models/productModel');
+const Product = require('../models/Product');
 
 class ProductController {
 	async listProducts(request, h) {
 		try {
-			const products = await ProductModel.getAll();
+			const products = await Product.getAll();
 			return h.response(products).code(200);
 		} catch (error) {
 			return h.response(error).code(500);
@@ -12,7 +12,7 @@ class ProductController {
 
 	async showProduct(request, h) {
 		try {
-			const product = await ProductModel.getById(request.params.id);
+			const product = await Product.getById(request.params.id);
 			if (!product) {
 				return h.response({ error: 'Product not found' }).code(404);
 			}
@@ -24,7 +24,7 @@ class ProductController {
 
 	async createProduct(request, h) {
 		try {
-			const newProduct = await ProductModel.create(request.payload);
+			const newProduct = await Product.create(request.payload);
 			return h.response(newProduct).code(201);
 		} catch (error) {
 			return h.response(error).code(500);
@@ -33,7 +33,7 @@ class ProductController {
 
 	async updateProduct(request, h) {
 		try {
-			const updatedProduct = await ProductModel.update(
+			const updatedProduct = await Product.update(
 				request.params.id,
 				request.payload
 			);
@@ -48,7 +48,7 @@ class ProductController {
 
 	async deleteProduct(request, h) {
 		try {
-			const rowsDeleted = await ProductModel.delete(request.params.id);
+			const rowsDeleted = await Product.delete(request.params.id);
 			if (!rowsDeleted) {
 				return h.response({ error: 'Product not found' }).code(404);
 			}
