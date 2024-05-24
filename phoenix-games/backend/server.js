@@ -3,10 +3,8 @@ require('dotenv').config();
 const Hapi = require('@hapi/hapi');
 const Knex = require('knex');
 const knexConfig = require('./knexfile');
-const customerRoutes = require('./routes/customerRoutes');
-const productRoutes = require('./routes/productRoutes');
 const PORT = process.env.PORT || 3001;
-
+const router = require('./routes/Router');
 const environment = process.env.NODE_ENV || 'development';
 const db = Knex(knexConfig[environment]);
 
@@ -18,16 +16,7 @@ const init = async () => {
 
 	server.app.db = db;
 
-	server.route(customerRoutes);
-	server.route(productRoutes);
-
-	server.route({
-		method: 'GET',
-		path: '/',
-		handler: (request, h) => {
-			return 'API funcionando!';
-		},
-	});
+	server.route(router);
 
 	await server.start();
 	console.log('Server running on %s', server.info.uri);

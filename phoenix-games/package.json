@@ -1,7 +1,11 @@
 {
   "dependencies": {
+    "@hapi/hapi": "^21.3.9",
     "@hapi/inert": "^7.1.0",
+    "dotenv": "^16.4.5",
     "hapi-cors": "^1.0.3",
-    "path": "^0.12.7"
+    "knex": "^3.1.0",
+    "path": "^0.12.7",
+    "react-router-dom": "^6.23.1"
   }
 }

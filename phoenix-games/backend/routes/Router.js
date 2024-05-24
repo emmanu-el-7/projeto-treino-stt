@@ -1,6 +1,8 @@
 const Hapi = require('@hapi/hapi');
 const customerRoutes = require('./customerRoutes');
-const paymentRoutes = require('./paymentRoutes');
+const productRoutes = require('./productRoutes');
+const orderRoutes = require('./orderRoutes');
+const cartRoutes = require('./cartRoutes');
 
 const init = async () => {
 	const server = Hapi.server({
@@ -9,7 +11,9 @@ const init = async () => {
 	});
 
 	server.route(customerRoutes);
-	server.route(paymentRoutes);
+	server.route(orderRoutes);
+	server.route(cartRoutes);
+	server.route(productRoutes);
 
 	server.route({
 		method: 'GET',
