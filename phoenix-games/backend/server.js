@@ -4,7 +4,10 @@ const Hapi = require('@hapi/hapi');
 const Knex = require('knex');
 const knexConfig = require('./knexfile');
 const PORT = process.env.PORT || 3001;
-const router = require('./routes/Router');
+const cartRoutes = require('./routes/cartRoutes');
+const productRoutes = require('./routes/productRoutes');
+const customerRoutes = require('./routes/customerRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 const environment = process.env.NODE_ENV || 'development';
 const db = Knex(knexConfig[environment]);
 
@@ -16,7 +19,18 @@ const init = async () => {
 
 	server.app.db = db;
 
-	server.route(router);
+	server.route(productRoutes);
+	server.route(cartRoutes);
+	server.route(customerRoutes);
+	server.route(orderRoutes);
+
+	server.route({
+		method: 'GET',
+		path: '/',
+		handler: (request, h) => {
+			return 'API funcionando!';
+		},
+	});
 
 	await server.start();
 	console.log('Server running on %s', server.info.uri);

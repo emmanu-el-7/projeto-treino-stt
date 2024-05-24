@@ -26,4 +26,9 @@ module.exports = [
 		path: '/products/{id}',
 		handler: productControler.deleteProduct,
 	},
+	{
+		method: 'GET',
+		path: '/search',
+		handler: productControler.searchProducts,
+	},
 ];
