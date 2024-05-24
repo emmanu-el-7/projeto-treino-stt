@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@hapi/inert": "^7.1.0",
+    "hapi-cors": "^1.0.3",
+    "path": "^0.12.7"
+  }
+}

@@ -9,6 +9,7 @@ module.exports = {
 			database: process.env.DB_NAME || 'phoenix',
 			user: process.env.DB_USER || 'admin',
 			password: process.env.DB_PASS || '33696549',
+			port: process.env.DB_PORT || 5432,
 		},
 	},
 };

@@ -16,6 +16,8 @@ const init = async () => {
 		host: '0.0.0.0',
 	});
 
+	server.app.db = db;
+
 	server.route(customerRoutes);
 	server.route(productRoutes);
 
@@ -24,14 +26,6 @@ const init = async () => {
 		path: '/',
 		handler: (request, h) => {
 			return 'API funcionando!';
-		},
-	});
-
-	server.route({
-		method: 'GET',
-		path: '/api/products',
-		handler: (productRoutes) => {
-			return { listProducts };
 		},
 	});
 

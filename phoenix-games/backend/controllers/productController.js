@@ -57,10 +57,19 @@ const deleteProduct = async (request, h) => {
 	}
 };
 
+const searchProducts = async (req, res) => {
+	const { q } = req.query;
+
+	const products = await Product.find({ title: new RegExp(q, 'i') }).exec();
+
+	res.status(200).json(products);
+};
+
 module.exports = {
 	listProducts,
 	showProduct,
 	createProduct,
 	updateProduct,
 	deleteProduct,
+	searchProducts,
 };
