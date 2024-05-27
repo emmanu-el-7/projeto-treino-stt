@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/navigation';
-import './productSwiper.css';
+import './productswiper.css';
 import { EffectCoverflow, Navigation, Autoplay } from 'swiper/modules';
 
 const ProductSwiper = ({ products }) => {
@@ -35,8 +35,8 @@ const ProductSwiper = ({ products }) => {
 			modules={[EffectCoverflow, Navigation, Autoplay]}
 			className='productSwiper'
 		>
-			{products.map((product) => (
-				<SwiperSlide key={product.id}>
+			{products.map((product, index) => (
+				<SwiperSlide key={index}>
 					<div className='productSlider'>
 						<img src={product.image} alt='Product Image' />
 						<div className='content'>

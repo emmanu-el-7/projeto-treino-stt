@@ -10,11 +10,11 @@ const ProductsContainer = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const data = await productService.getAllProducts();
-				setProducts(data);
-				setLoading(false);
+				const productsArray = await productService.getAllProducts();
+				setProducts(productsArray);
 			} catch (error) {
 				setError(error.message);
+			} finally {
 				setLoading(false);
 			}
 		};
@@ -32,7 +32,6 @@ const ProductsContainer = () => {
 
 	return (
 		<div>
-			<h1>Products</h1>
 			<ProductSwiper products={products} />
 		</div>
 	);

@@ -1,10 +1,22 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import productService from '../services/productService';
 
+const initialState = {
+	products: [],
+	error: false,
+	success: false,
+	loading: false,
+	message: null,
+};
+
 export const fetchProducts = createAsyncThunk(
 	'products/fetchProducts',
 	async () => {
-		return productService.getAllProducts();
+		try {
+			return await productService.getAllProducts();
+		} catch (error) {
+			throw new Error(error.message);
+		}
 	}
 );
 
@@ -12,7 +24,11 @@ export const addProduct = createAsyncThunk(
 	'products/addProduct',
 	async (data, { getState }) => {
 		const { auth } = getState();
-		return productService.addProduct(data, auth.token);
+		try {
+			return await productService.createProduct(data, auth.token);
+		} catch (error) {
+			throw new Error(error.message);
+		}
 	}
 );
 
@@ -20,7 +36,11 @@ export const updateProduct = createAsyncThunk(
 	'products/updateProduct',
 	async (data, { getState }) => {
 		const { auth } = getState();
-		return productService.updateProduct(data.id, data, auth.token);
+		try {
+			return await productService.updateProduct(data.id, data, auth.token);
+		} catch (error) {
+			throw new Error(error.message);
+		}
 	}
 );
 
@@ -28,17 +48,17 @@ export const deleteProduct = createAsyncThunk(
 	'products/deleteProduct',
 	async (id, { getState }) => {
 		const { auth } = getState();
-		return productService.deleteProduct(id, auth.token);
+		try {
+			return await productService.deleteProduct(id, auth.token);
+		} catch (error) {
+			throw new Error(error.message);
+		}
 	}
 );
 
 const productSlice = createSlice({
 	name: 'products',
-	initialState: {
-		products: [],
-		loading: false,
-		error: null,
-	},
+	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
 		builder
