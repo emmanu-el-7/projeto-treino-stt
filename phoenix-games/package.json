@@ -6,6 +6,7 @@
     "hapi-cors": "^1.0.3",
     "knex": "^3.1.0",
     "path": "^0.12.7",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "swiper": "^11.1.3"
   }
 }

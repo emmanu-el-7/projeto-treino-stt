@@ -15,6 +15,11 @@ const init = async () => {
 	const server = Hapi.server({
 		port: PORT,
 		host: '0.0.0.0',
+		routes: {
+			cors: {
+				origin: ['*'],
+			},
+		},
 	});
 
 	server.app.db = db;
@@ -23,14 +28,6 @@ const init = async () => {
 	server.route(cartRoutes);
 	server.route(customerRoutes);
 	server.route(orderRoutes);
-
-	server.route({
-		method: 'GET',
-		path: '/',
-		handler: (request, h) => {
-			return 'API funcionando!';
-		},
-	});
 
 	await server.start();
 	console.log('Server running on %s', server.info.uri);
