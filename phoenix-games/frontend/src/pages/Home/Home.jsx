@@ -1,42 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import './home.css';
-import ProductSwiper from './ProductSwiper';
-import productService from '../services/productService';
+import ProductsContainer from '../../components/ProductsContainer';
 
-const ProductsContainer = () => {
-	const [products, setProducts] = useState([]);
-	const [loading, setLoading] = useState(true);
-	const [error, setError] = useState(null);
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const data = await productService.getAllProducts();
-				setProducts(data);
-				setLoading(false);
-			} catch (error) {
-				setError(error.message);
-				setLoading(false);
-			}
-		};
-
-		fetchData();
-	}, []);
-
-	if (loading) {
-		return <div>Loading...</div>;
-	}
-
-	if (error) {
-		return <div>Error: {error}</div>;
-	}
-
+const Home = () => {
 	return (
 		<div>
-			<h1>Products</h1>
-			<ProductSwiper products={products} />
+			<ProductsContainer />
 		</div>
 	);
 };
 
-export default ProductsContainer;
+export default Home;
