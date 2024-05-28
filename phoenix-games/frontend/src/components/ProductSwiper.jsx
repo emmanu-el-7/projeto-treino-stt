@@ -7,10 +7,10 @@ import './productswiper.css';
 import { EffectCoverflow, Navigation, Autoplay } from 'swiper/modules';
 
 const ProductSwiper = ({ products }) => {
-	const [active, setActive] = useState(false);
+	const [activeIndex, setActiveIndex] = useState(null);
 
-	const handleToggleVideo = () => {
-		setActive(!active);
+	const handleToggleVideo = (index) => {
+		setActiveIndex(index === activeIndex ? null : index);
 	};
 
 	return (
@@ -28,10 +28,10 @@ const ProductSwiper = ({ products }) => {
 				modifier: 1,
 				slideShadows: true,
 			}}
-			autoplay={{
-				delay: 2500,
-				disableOnInteraction: false,
-			}}
+			// autoplay={{
+			// 	delay: 2500,
+			// 	disableOnInteraction: false,
+			// }}
 			modules={[EffectCoverflow, Navigation, Autoplay]}
 			className='productSwiper'
 		>
@@ -39,15 +39,26 @@ const ProductSwiper = ({ products }) => {
 				<SwiperSlide key={index}>
 					<div className='productSlider'>
 						<img src={product.image} alt='Product Image' />
+						<div className={`video ${index === activeIndex ? 'active' : ''}`}>
+							<iframe
+								width='1280'
+								height='720'
+								src={product.trailer}
+								title={product.name}
+								allow='accelerometer; clipboard-white; encrypted-media; gyroscope; picture-in-picture'
+								allowFullScreen
+							></iframe>
+						</div>
 						<div className='content'>
+							<h2>{product.name}</h2>
 							<div className='buttons'>
 								<a href='#' className='orderBtn'>
-									Order Now
+									Compre já!
 								</a>
 								<a
-									href={product.trailer}
-									className={`playBtn ${active ? 'active' : ''}`}
-									onClick={handleToggleVideo}
+									href='#'
+									className={`playBtn ${index === activeIndex ? 'active' : ''}`}
+									onClick={() => handleToggleVideo(index)}
 								>
 									<span className='pause'>
 										<i className='bi bi-pause-fill'></i>

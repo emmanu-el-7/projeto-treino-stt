@@ -1,5 +1,5 @@
 FROM node:20
 WORKDIR /phoenix-games
-COPY . .
+COPY . /
 RUN npm install
 CMD ["npm", "start"]
