@@ -6,7 +6,7 @@
 
 .productSlider {
 	width: 550px;
-	height: 350px;
+	height: 550px;
 	position: relative;
 	background-position: center;
 	background-size: cover;
@@ -31,7 +31,7 @@
 	top: 0;
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	object-fit: fill;
 	object-position: center;
 	border-radius: 30px !important;
 }
