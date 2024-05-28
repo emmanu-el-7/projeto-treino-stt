@@ -45,7 +45,7 @@ const ProductSwiper = ({ products }) => {
 									Order Now
 								</a>
 								<a
-									href='#'
+									href={product.trailer}
 									className={`playBtn ${active ? 'active' : ''}`}
 									onClick={handleToggleVideo}
 								>
