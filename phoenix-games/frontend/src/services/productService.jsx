@@ -1,6 +1,6 @@
 import { api, requestConfig } from '../utils/config';
 
-const getAllProducts = async () => {
+const listProducts = async () => {
 	const config = requestConfig('GET');
 	try {
 		const res = await fetch(api + '/products', config);
@@ -59,7 +59,7 @@ const deleteProduct = async (id, token) => {
 };
 
 const productService = {
-	getAllProducts,
+	listProducts,
 	getProductDetails,
 	createProduct,
 	updateProduct,

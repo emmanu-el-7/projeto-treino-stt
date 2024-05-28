@@ -10,7 +10,7 @@ const ProductsContainer = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const productsArray = await productService.getAllProducts();
+				const productsArray = await productService.listProducts();
 				setProducts(productsArray);
 			} catch (error) {
 				setError(error.message);
