@@ -5,12 +5,11 @@
 }
 
 .productSlider {
-	width: 400px;
-	height: 400px;
+	width: 70vh;
+	height: 70vh;
 	position: relative;
 	background-size: cover;
 	padding: 30px;
-	margin-top: auto;
 	overflow: hidden;
 	margin: auto;
 	display: flex;
