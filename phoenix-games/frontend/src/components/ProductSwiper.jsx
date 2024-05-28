@@ -40,8 +40,6 @@ const ProductSwiper = ({ products }) => {
 					<div className='productSlider'>
 						<img src={product.image} alt='Product Image' />
 						<div className='content'>
-							<h2>{product.name}</h2>
-							<p>{product.description}</p>
 							<div className='buttons'>
 								<a href='#' className='orderBtn'>
 									Order Now
