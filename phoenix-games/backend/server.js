@@ -15,7 +15,12 @@ const init = async () => {
 	const server = Hapi.server({
 		port: PORT,
 		host: '0.0.0.0',
-		routes: {},
+		routes: {
+			cors: {
+				origin: ['*'],
+				additionalHeaders: ['cache-control', 'x-requested-with'],
+			},
+		},
 	});
 
 	server.app.db = db;

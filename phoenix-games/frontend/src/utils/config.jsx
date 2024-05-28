@@ -1,19 +1,19 @@
-export const api = process.env.REACT_APP_API_URL || 'http://localhost:3001/api';
+export const api = 'http://localhost:3001';
 
-export const requestConfig = (method, data, token = null) => {
+export const requestConfig = (method, data = null, token = null) => {
 	const config = {
-		method,
+		method: method,
 		headers: {
 			'Content-Type': 'application/json',
 		},
 	};
 
-	if (data) {
-		config.body = JSON.stringify(data);
+	if (token) {
+		config.headers['Authorization'] = `Bearer ${token}`;
 	}
 
-	if (token) {
-		config.headers.Authorization = `Bearer ${token}`;
+	if (data) {
+		config.body = JSON.stringify(data);
 	}
 
 	return config;

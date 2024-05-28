@@ -2,6 +2,7 @@
   "dependencies": {
     "@hapi/hapi": "^21.3.9",
     "@hapi/inert": "^7.1.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "hapi-cors": "^1.0.3",
     "knex": "^3.1.0",
