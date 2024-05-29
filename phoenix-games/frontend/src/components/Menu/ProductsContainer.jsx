@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ProductSwiper from './ProductSwiper';
-import productService from '../services/productService';
+import productService from '../../services/productService';
 
 const ProductsContainer = () => {
 	const [products, setProducts] = useState([]);

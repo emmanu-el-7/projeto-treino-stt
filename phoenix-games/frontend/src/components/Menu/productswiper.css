@@ -4,12 +4,22 @@
 	box-sizing: border-box;
 }
 
+.productSwiper .swiper-slide {
+	width: auto;
+	flex-shrink: 0;
+}
+
+.productSwiper .swiper-wrapper {
+	display: flex;
+	align-items: center;
+}
+
 .productSlider {
-	width: 70vh;
-	height: 70vh;
+	width: 55vh;
+	height: 40vh;
 	position: relative;
 	background-size: cover;
-	padding: 30px;
+	padding-top: 80px;
 	overflow: hidden;
 	margin: auto;
 	display: flex;
@@ -72,6 +82,11 @@
 	padding: 8px 20px;
 	background: var(--second);
 	border-radius: 10px;
+	transition: 0.3s;
+}
+
+.productSlider .content .buttons .orderBtn:hover {
+	background: var(--primary);
 }
 
 .productSlider .content .buttons .playBtn {

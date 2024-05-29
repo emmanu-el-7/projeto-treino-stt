@@ -21,9 +21,10 @@ const ProductSwiper = ({ products }) => {
 			loop={true}
 			centeredSlides={true}
 			slidesPerView={'auto'}
+			spaceBetween={0}
 			coverflowEffect={{
 				rotate: 35,
-				stretch: 200,
+				stretch: 0,
 				depth: 250,
 				modifier: 1,
 				slideShadows: true,
