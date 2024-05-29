@@ -3,7 +3,7 @@
 	padding: 25px 20px;
 	margin-bottom: 25px;
 	width: auto;
-	height: 400px;
+	height: 39vh;
 	border: 1px solid rgba(0, 0, 0, 0.1);
 	border-radius: 20px;
 	background: var(--bgColor);
@@ -12,13 +12,20 @@
 }
 
 .product-name {
-	font-size: 0.8rem;
+	font-size: 1rem;
+}
+
+.product-price {
+	font-size: 1rem;
 }
 
 .img-fluid {
-	width: 25vh;
-	height: 25vh;
+	width: 22vh;
+	height: 22vh;
 	border-radius: 30px !important;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .productFeature {
