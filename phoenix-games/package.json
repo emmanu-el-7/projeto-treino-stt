@@ -1,7 +1,10 @@
 {
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
     "@hapi/hapi": "^21.3.9",
     "@hapi/inert": "^7.1.0",
+    "@mui/material": "^5.15.19",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "hapi-cors": "^1.0.3",

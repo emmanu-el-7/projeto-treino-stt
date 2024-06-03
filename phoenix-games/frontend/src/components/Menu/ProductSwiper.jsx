@@ -5,6 +5,16 @@ import 'swiper/css/effect-coverflow';
 import 'swiper/css/navigation';
 import './productswiper.css';
 import { EffectCoverflow, Navigation, Autoplay } from 'swiper/modules';
+import {
+	Button,
+	IconButton,
+	Card,
+	CardMedia,
+	CardContent,
+	Typography,
+} from '@mui/material';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import PauseIcon from '@mui/icons-material/Pause';
 
 const ProductSwiper = ({ products }) => {
 	const [activeIndex, setActiveIndex] = useState(null);
@@ -29,17 +39,21 @@ const ProductSwiper = ({ products }) => {
 				modifier: 1,
 				slideShadows: true,
 			}}
-			// autoplay={{
-			// 	delay: 2500,
-			// 	disableOnInteraction: false,
-			// }}
+			autoplay={{
+				delay: 2500,
+				disableOnInteraction: true,
+			}}
 			modules={[EffectCoverflow, Navigation, Autoplay]}
 			className='productSwiper'
 		>
 			{products.map((product, index) => (
 				<SwiperSlide key={index}>
-					<div className='productSlider'>
-						<img src={product.image} alt='Product Image' />
+					<Card className='productSlider'>
+						<CardMedia
+							component='img'
+							image={product.image}
+							alt='Product Image'
+						/>
 						<div className={`video ${index === activeIndex ? 'active' : ''}`}>
 							<iframe
 								width='1280'
@@ -50,27 +64,24 @@ const ProductSwiper = ({ products }) => {
 								allowFullScreen
 							></iframe>
 						</div>
-						<div className='content'>
-							<h2>{product.name}</h2>
+						<CardContent className='content'>
+							<Typography variant='h5' component='h2'>
+								{product.name}
+							</Typography>
 							<div className='buttons'>
-								<a href='#' className='orderBtn'>
+								<Button variant='contained' color='primary' href='#'>
 									Compre já!
-								</a>
-								<a
-									href='#'
+								</Button>
+								<IconButton
+									color='primary'
 									className={`playBtn ${index === activeIndex ? 'active' : ''}`}
 									onClick={() => handleToggleVideo(index)}
 								>
-									<span className='pause'>
-										<i className='bi bi-pause-fill'></i>
-									</span>
-									<span className='play'>
-										<i className='bi bi-play-fill'></i>
-									</span>
-								</a>
+									{index === activeIndex ? <PauseIcon /> : <PlayArrowIcon />}
+								</IconButton>
 							</div>
-						</div>
-					</div>
+						</CardContent>
+					</Card>
 				</SwiperSlide>
 			))}
 		</Swiper>
