@@ -12,3 +12,11 @@ section.home .sectionTitle {
 .viewMore:hover {
 	color: var(--second);
 }
+
+.row {
+	padding-top: 2rem;
+}
+
+.sectionTitle {
+	padding: 10px;
+}

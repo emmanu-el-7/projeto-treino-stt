@@ -10,15 +10,19 @@ import {
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import PauseIcon from '@mui/icons-material/Pause';
 import Carousel from 'react-material-ui-carousel';
-import './productcarousel.css';
+import './productCarousel.css';
 
 const ProductCarousel = ({ products }) => {
 	const [activeIndex, setActiveIndex] = useState(null);
 
 	const handleToggleVideo = (index) => {
-		setActiveIndex(index === activeIndex ? null : index);
-	};
+		if (activeIndex !== null && activeIndex === index) {
+			setActiveIndex(null);
+			return;
+		}
 
+		setActiveIndex(index);
+	};
 	return (
 		<Carousel>
 			{products.map((product, index) => (
