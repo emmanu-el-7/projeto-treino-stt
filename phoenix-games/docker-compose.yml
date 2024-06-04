@@ -25,6 +25,8 @@ services:
     environment:
       - NODE_ENV=development
       - REACT_APP_API_URL=http://localhost:3001/api
+    volumes:
+      - ./frontend:/phoenix-games
     command: ['npm', 'start']
 
   db:

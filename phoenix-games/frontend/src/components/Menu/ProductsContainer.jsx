@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import ProductSwiper from './ProductSwiper';
+import ProductCarousel from './ProductCarousel';
 import productService from '../../services/productService';
 
 const ProductsContainer = () => {
@@ -32,7 +32,7 @@ const ProductsContainer = () => {
 
 	return (
 		<div>
-			<ProductSwiper products={products} />
+			<ProductCarousel products={products} />
 		</div>
 	);
 };
