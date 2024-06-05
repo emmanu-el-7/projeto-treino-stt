@@ -1,97 +1,77 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createContext, useContext, useState, useEffect } from 'react';
 import authService from '../services/authService';
 
-const customer = JSON.parse(localStorage.getItem('customer'));
+const AuthContext = createContext();
 
-const initialState = {
-	customer: customer ? customer : null,
-	error: false,
-	success: false,
-	loading: false,
+export const useAuth = () => {
+	return useContext(AuthContext);
 };
 
-export const register = createAsyncThunk(
-	'auth/register',
+export const AuthProvider = ({ children }) => {
+	const [customer, setCustomer] = useState(
+		JSON.parse(localStorage.getItem('customer')) || null
+	);
+	const [error, setError] = useState(false);
+	const [success, setSuccess] = useState(false);
+	const [loading, setLoading] = useState(false);
 
-	async (customer, thunkAPI) => {
-		const data = await authService.register(customer);
+	useEffect(() => {
+		localStorage.setItem('customer', JSON.stringify(customer));
+	}, [customer]);
 
-		if (data.errors) {
-			return thunkAPI.rejectWithValue(data.errors[0]); //será exibida sempre a primeira mensagem de erro do array
+	const register = async (customerData) => {
+		setLoading(true);
+		setError(false);
+		try {
+			const data = await authService.register(customerData);
+			if (!data.errors) {
+				setCustomer(data);
+				setSuccess(true);
+				setLoading(false);
+			}
+		} catch (err) {
+			console.error(err);
+			setLoading(false);
+			setError(true);
 		}
+	};
 
-		return data;
-	}
-);
-
-export const logout = createAsyncThunk('auth/logout', async () => {
-	await authService.logout();
-});
-
-export const login = createAsyncThunk(
-	'auth/login',
-	async (customer, thunkAPI) => {
-		const data = await authService.login(customer);
-
-		if (data.errors) {
-			return thunkAPI.rejectWithValue(data.errors[0]);
+	const logout = async () => {
+		setLoading(true);
+		try {
+			await authService.logout();
+			setCustomer(null);
+			setSuccess(true);
+			setLoading(false);
+		} catch (err) {
+			console.error(err);
+			setLoading(false);
+			setError(true);
 		}
+	};
 
-		return data;
-	}
-);
+	const login = async (customerData) => {
+		setLoading(true);
+		setError(false);
+		try {
+			const data = await authService.login(customerData);
+			if (!data.errors) {
+				setCustomer(data);
+				setSuccess(true);
+				setLoading(false);
+			}
+		} catch (err) {
+			console.error(err);
+			setLoading(false);
+			setError(true);
+		}
+	};
 
-export const authSlice = createSlice({
-	name: 'auth',
-	initialState,
-	reducers: {
-		reset: (state) => {
-			state.error = false;
-			state.success = false;
-			state.loading = false;
-		},
-	},
-	extraReducers: (builder) => {
-		builder
-			.addCase(register.pending, (state) => {
-				state.loading = true;
-				state.error = false;
-			})
-			.addCase(register.fulfilled, (state, action) => {
-				state.loading = false;
-				state.success = true;
-				state.error = null;
-				state.customer = action.payload;
-			})
-			.addCase(register.rejected, (state, action) => {
-				state.loading = false;
-				state.error = action.payload;
-				state.customer = null;
-			})
-			.addCase(logout.fulfilled, (state, action) => {
-				state.loading = false;
-				state.success = true;
-				state.error = null;
-				state.customer = null;
-			})
-			.addCase(login.pending, (state) => {
-				state.loading = true;
-				state.error = false;
-			})
-			.addCase(login.fulfilled, (state, action) => {
-				state.loading = false;
-				state.success = true;
-				state.error = null;
-				state.customer = action.payload;
-			})
-			.addCase(login.rejected, (state, action) => {
-				state.loading = false;
-				state.error = action.payload;
-				state.customer = null;
-			});
-	},
-});
-
-export const { reset } = authSlice.actions;
-
-export default authSlice.reducer;
+	return (
+		<AuthContext.Provider
+			value={{ customer, loading, error, success, register, logout, login }}
+		>
+			{children}
+		</AuthContext.Provider>
+	);
+};

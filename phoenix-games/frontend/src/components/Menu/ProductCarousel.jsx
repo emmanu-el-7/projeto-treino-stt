@@ -26,7 +26,7 @@ const ProductCarousel = ({ products }) => {
 							{product.name}
 						</Typography>
 						<div className='buttons'>
-							<Button variant='contained' color='primary' href='#'>
+							<Button variant='contained' color='primary' href='/product'>
 								Compre já!
 							</Button>
 						</div>

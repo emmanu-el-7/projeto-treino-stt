@@ -14,11 +14,7 @@ const Home = ({ products }) => {
 					<div className='col-lg-6 justify-content-start'>
 						<h2 className='sectionTitle'>Top Rated</h2>
 					</div>
-					<div className='col-lg-6 d-flex justify-content-end align-items-center'>
-						<a href='#' className='viewMore'>
-							Mais Jogos <i className='bi bi-arrow-right'></i>
-						</a>
-					</div>
+
 					<div className='row_'>
 						{products
 							.sort((a, b) => b.rating - a.rating)

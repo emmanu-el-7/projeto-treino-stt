@@ -60,8 +60,10 @@ const Header = ({ toggleActive }) => {
 					<Typography variant='body2' className='username'>
 						Pedro Bala
 					</Typography>
-					<Typography className='view-profile'>
-						<Link href='/profile'>View Profile</Link>
+					<Typography variant='body2' className='view-profile'>
+						<Link sx={{ color: 'white' }} href='/profile'>
+							View Profile
+						</Link>
 					</Typography>
 				</div>
 			</Toolbar>

@@ -1,12 +1,6 @@
-import './Auth.css';
-
-import { NavLink } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-
-import { register, reset } from '../../slices/authSlice';
-import { useSelector, useDispatch } from 'react-redux';
-
-import Message from '../../components/Message';
+import React, { useState } from 'react';
+import { useAuth } from '../../slices/authSlice';
+import { Link } from '@reach/router';
 
 const Register = () => {
 	const [customer, setcustomer] = useState({
@@ -16,9 +10,7 @@ const Register = () => {
 		confirmPassword: '',
 	});
 
-	const dispatch = useDispatch();
-
-	const { loading, error } = useSelector((state) => state.auth);
+	const { register, reset, loading, error } = useAuth();
 
 	const handleChange = (e) => {
 		setcustomer({
@@ -27,17 +19,15 @@ const Register = () => {
 		});
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		console.log(customer);
-
-		dispatch(register(customer));
+		try {
+			await register(customer);
+		} catch (err) {
+			console.error(err);
+		}
 	};
-
-	useEffect(() => {
-		dispatch(reset());
-	}, [dispatch]);
 
 	return (
 		<div id='register'>
@@ -77,10 +67,10 @@ const Register = () => {
 				{!loading && <input type='submit' value='Cadastrar' />}
 				{loading && <input type='submit' value='Aguarde...' disabled />}
 				{error && <Message msg={error} type='error' />}
-				<p>
-					Já possui cadastro? <NavLink to='/login'>Clique aqui</NavLink>
-				</p>
 			</form>
+			<p>
+				Já possui cadastro? <Link to='/login'>Clique aqui</Link>
+			</p>
 		</div>
 	);
 };
