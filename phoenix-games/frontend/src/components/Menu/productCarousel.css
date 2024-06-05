@@ -1,6 +1,5 @@
 .productSwiper {
 	width: 90%;
-	padding-bottom: 30px;
 	box-sizing: border-box;
 	padding-top: 3rem;
 }
@@ -88,56 +87,4 @@
 
 .productSlider .content .buttons .orderBtn:hover {
 	background: var(--primary);
-}
-
-.productSlider .content .buttons .playBtn {
-	height: 50px;
-	width: 50px;
-	background: rgba(255, 255, 255, 0.2);
-	backdrop-filter: blur(20px);
-	border-radius: 50%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-size: 2.5rem;
-}
-
-.playBtn .play {
-	display: block;
-}
-
-.playBtn .pause {
-	display: none;
-}
-
-.swiper-slide.swiper-slide-active .playBtn.active .play {
-	display: none;
-}
-
-.swiper-slide.swiper-slide-active .playBtn.active .pause {
-	display: block;
-}
-.swiper-slide .video iframe {
-	position: absolute;
-	right: 0;
-	top: 0;
-	width: 85%;
-	height: 75%;
-	border-radius: 0 30px 0 30px !important;
-	border: 5px solid transparent;
-	background: var(--second);
-	box-shadow: -5px -5px 15px rgba(255, 255, 255, 0.15),
-		5px 5px 15px rgba(0, 0, 0, 0.35);
-	z-index: 1100;
-	visibility: hidden;
-	opacity: 0;
-	transform: scale(0);
-	transition: 0.5s;
-	transform-origin: top right;
-}
-
-.swiper-slide.swiper-slide-active .video.active iframe {
-	visibility: visible;
-	opacity: 1;
-	transform: scale(1);
 }
