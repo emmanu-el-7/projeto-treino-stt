@@ -13,6 +13,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Link from '@mui/material/Link';
 import './header.css';
 
 const Header = ({ toggleActive }) => {
@@ -57,11 +58,11 @@ const Header = ({ toggleActive }) => {
 						src='https://payhip.com/cdn-cgi/image/format=auto/https://pe56d.s3.amazonaws.com/o_1gqfbei6sq37q1n1vcp1dvejr910.png'
 					/>
 					<Typography variant='body2' className='username'>
-						Username
+						Pedro Bala
 					</Typography>
-					<Button variant='outlined' className='viewprofileBtn'>
-						View Profile
-					</Button>
+					<Typography className='view-profile'>
+						<Link href='/profile'>View Profile</Link>
+					</Typography>
 				</div>
 			</Toolbar>
 		</AppBar>

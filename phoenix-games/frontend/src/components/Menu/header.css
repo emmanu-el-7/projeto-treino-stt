@@ -8,16 +8,6 @@
 	color: #ffff;
 }
 
-.viewprofileBtn {
-	color: #ffff;
-	background-color: var(--second);
-}
-
-.viewprofileBtn:hover {
-	color: #ffff;
-	background-color: var(--primary);
-}
-
 .user-area {
 	align-items: end;
 }
